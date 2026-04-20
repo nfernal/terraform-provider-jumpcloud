@@ -60,7 +60,7 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: .go-version
-      - run: go test -v -cover -timeout=120s -parallel=10 ./...
+      - run: go test -v -coverprofile=coverage.txt -timeout=120s -parallel=10 ./...
 
   # Acceptance tests require JumpCloud API credentials and are run manually
   # or on a schedule. They are not run on every PR.
