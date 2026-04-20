@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/nfernal/terraform-provider-jumpcloud/compare/v1.0.0...v1.0.1) (2026-04-20)
+
+### Bug Fixes
+
+* install Terraform in CI generate step to avoid expired GPG key ([8b5e39e](https://github.com/nfernal/terraform-provider-jumpcloud/commit/8b5e39eb3f5d9cebfc1718fae4c4dc76e2a5de53))
+
 ## 1.0.0 (2026-04-20)
 
 ### Bug Fixes
