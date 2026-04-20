@@ -60,7 +60,7 @@ func TestDoRequest_setsHeaders(t *testing.T) {
 			t.Errorf("expected User-Agent %q, got %q", "terraform-provider-jumpcloud/test", got)
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{}`)
+		_, _ = fmt.Fprint(w, `{}`)
 	}))
 	defer server.Close()
 
@@ -77,7 +77,7 @@ func TestDoRequest_noOrgID(t *testing.T) {
 			t.Errorf("expected no x-org-id header, got %q", got)
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{}`)
+		_, _ = fmt.Fprint(w, `{}`)
 	}))
 	defer server.Close()
 
@@ -99,7 +99,7 @@ func TestDoRequest_sendsBody(t *testing.T) {
 			t.Errorf("expected body name %q, got %q", "test", body["name"])
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{"id":"123"}`)
+		_, _ = fmt.Fprint(w, `{"id":"123"}`)
 	}))
 	defer server.Close()
 
@@ -247,10 +247,10 @@ func TestDoListRequest_pagination(t *testing.T) {
 			for i := range items {
 				items[i] = map[string]string{"id": fmt.Sprintf("%d", i)}
 			}
-			json.NewEncoder(w).Encode(items)
+			_ = json.NewEncoder(w).Encode(items)
 		} else {
 			// Second call: return fewer than pageSize to stop
-			fmt.Fprint(w, `[{"id":"extra"}]`)
+			_, _ = fmt.Fprint(w, `[{"id":"extra"}]`)
 		}
 	}))
 	defer server.Close()

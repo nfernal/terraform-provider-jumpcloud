@@ -22,11 +22,11 @@ func TestCreateSystemGroup(t *testing.T) {
 		}
 
 		var group SystemGroup
-		json.NewDecoder(r.Body).Decode(&group)
+		_ = json.NewDecoder(r.Body).Decode(&group)
 
 		w.WriteHeader(http.StatusCreated)
 		group.ID = "sysgrp123"
-		json.NewEncoder(w).Encode(group)
+		_ = json.NewEncoder(w).Encode(group)
 	}))
 	defer server.Close()
 
@@ -70,7 +70,7 @@ func TestGetSystemGroup(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(SystemGroup{
+		_ = json.NewEncoder(w).Encode(SystemGroup{
 			ID:          "sysgrp123",
 			Name:        "test-system-group",
 			Description: "desc",
@@ -115,11 +115,11 @@ func TestUpdateSystemGroup(t *testing.T) {
 		}
 
 		var group SystemGroup
-		json.NewDecoder(r.Body).Decode(&group)
+		_ = json.NewDecoder(r.Body).Decode(&group)
 
 		w.WriteHeader(http.StatusOK)
 		group.ID = "sysgrp123"
-		json.NewEncoder(w).Encode(group)
+		_ = json.NewEncoder(w).Encode(group)
 	}))
 	defer server.Close()
 
@@ -186,7 +186,7 @@ func TestDeleteSystemGroup_notFound(t *testing.T) {
 func TestCreateSystemGroup_withDescription(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var group SystemGroup
-		json.NewDecoder(r.Body).Decode(&group)
+		_ = json.NewDecoder(r.Body).Decode(&group)
 
 		if group.Description != "detailed description" {
 			t.Errorf("expected description %q, got %q", "detailed description", group.Description)
@@ -194,7 +194,7 @@ func TestCreateSystemGroup_withDescription(t *testing.T) {
 
 		w.WriteHeader(http.StatusCreated)
 		group.ID = "sysgrp456"
-		json.NewEncoder(w).Encode(group)
+		_ = json.NewEncoder(w).Encode(group)
 	}))
 	defer server.Close()
 
