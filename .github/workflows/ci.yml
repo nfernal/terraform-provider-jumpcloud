@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
@@ -64,6 +65,10 @@ jobs:
         with:
           go-version-file: .go-version
       - run: go test -v -coverprofile=coverage.txt -timeout=120s -parallel=10 ./...
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   # Acceptance tests require JumpCloud API credentials and are run manually
   # or on a schedule. They are not run on every PR.
