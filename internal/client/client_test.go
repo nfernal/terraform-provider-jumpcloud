@@ -116,7 +116,7 @@ func TestDoRequest_sendsBody(t *testing.T) {
 func TestDoRequest_apiError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprint(w, `{"message":"bad request"}`)
+		_, _ = fmt.Fprint(w, `{"message":"bad request"}`)
 	}))
 	defer server.Close()
 
@@ -140,7 +140,7 @@ func TestDoRequest_apiError(t *testing.T) {
 func TestDoRequest_serverError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprint(w, `{"error":"internal server error"}`)
+		_, _ = fmt.Fprint(w, `{"error":"internal server error"}`)
 	}))
 	defer server.Close()
 
@@ -170,7 +170,7 @@ func TestDoRequestWithQuery_addsParams(t *testing.T) {
 			t.Errorf("expected limit param %q, got %q", "10", got)
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `[]`)
+		_, _ = fmt.Fprint(w, `[]`)
 	}))
 	defer server.Close()
 
@@ -191,7 +191,7 @@ func TestDoRequestWithQuery_noParams(t *testing.T) {
 			t.Errorf("expected no query params, got %q", r.URL.RawQuery)
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `[]`)
+		_, _ = fmt.Fprint(w, `[]`)
 	}))
 	defer server.Close()
 
@@ -271,7 +271,7 @@ func TestDoListRequest_pagination(t *testing.T) {
 func TestDoListRequest_emptyResults(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `[]`)
+		_, _ = fmt.Fprint(w, `[]`)
 	}))
 	defer server.Close()
 

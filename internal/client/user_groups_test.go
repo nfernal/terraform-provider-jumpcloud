@@ -22,11 +22,11 @@ func TestCreateUserGroup(t *testing.T) {
 		}
 
 		var group UserGroup
-		json.NewDecoder(r.Body).Decode(&group)
+		_ = json.NewDecoder(r.Body).Decode(&group)
 
 		w.WriteHeader(http.StatusCreated)
 		group.ID = "grp123"
-		json.NewEncoder(w).Encode(group)
+		_ = json.NewEncoder(w).Encode(group)
 	}))
 	defer server.Close()
 
@@ -49,7 +49,7 @@ func TestCreateUserGroup(t *testing.T) {
 func TestCreateUserGroup_apiError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprint(w, `{"message":"invalid group"}`)
+		_, _ = fmt.Fprint(w, `{"message":"invalid group"}`)
 	}))
 	defer server.Close()
 
@@ -70,7 +70,7 @@ func TestGetUserGroup(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(UserGroup{
+		_ = json.NewEncoder(w).Encode(UserGroup{
 			ID:          "grp123",
 			Name:        "test-group",
 			Description: "desc",
@@ -91,7 +91,7 @@ func TestGetUserGroup(t *testing.T) {
 func TestGetUserGroup_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"group not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"group not found"}`)
 	}))
 	defer server.Close()
 
@@ -112,11 +112,11 @@ func TestUpdateUserGroup(t *testing.T) {
 		}
 
 		var group UserGroup
-		json.NewDecoder(r.Body).Decode(&group)
+		_ = json.NewDecoder(r.Body).Decode(&group)
 
 		w.WriteHeader(http.StatusOK)
 		group.ID = "grp123"
-		json.NewEncoder(w).Encode(group)
+		_ = json.NewEncoder(w).Encode(group)
 	}))
 	defer server.Close()
 
@@ -155,7 +155,7 @@ func TestDeleteUserGroup(t *testing.T) {
 func TestDeleteUserGroup_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"group not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"group not found"}`)
 	}))
 	defer server.Close()
 
@@ -174,7 +174,7 @@ func TestGetUserGroupByName(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]UserGroup{
+		_ = json.NewEncoder(w).Encode([]UserGroup{
 			{ID: "grp123", Name: "test-group", Description: "found"},
 		})
 	}))
@@ -193,7 +193,7 @@ func TestGetUserGroupByName(t *testing.T) {
 func TestGetUserGroupByName_noResults(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `[]`)
+		_, _ = fmt.Fprint(w, `[]`)
 	}))
 	defer server.Close()
 
@@ -210,7 +210,7 @@ func TestGetUserGroupByName_noResults(t *testing.T) {
 func TestGetUserGroupByName_noExactMatch(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]UserGroup{
+		_ = json.NewEncoder(w).Encode([]UserGroup{
 			{ID: "grp123", Name: "test-group-other"},
 		})
 	}))
@@ -233,7 +233,7 @@ func TestListUserGroupMembers(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode([]GroupMemberResponse{
+		_ = json.NewEncoder(w).Encode([]GroupMemberResponse{
 			{To: GroupMember{ID: "user1", Type: "user"}},
 			{To: GroupMember{ID: "user2", Type: "user"}},
 		})
@@ -259,7 +259,7 @@ func TestListUserGroupMembers(t *testing.T) {
 func TestListUserGroupMembers_empty(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `[]`)
+		_, _ = fmt.Fprint(w, `[]`)
 	}))
 	defer server.Close()
 
@@ -276,7 +276,7 @@ func TestListUserGroupMembers_empty(t *testing.T) {
 func TestListUserGroupMembers_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"group not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"group not found"}`)
 	}))
 	defer server.Close()
 
@@ -297,7 +297,7 @@ func TestModifyUserGroupMembership_add(t *testing.T) {
 		}
 
 		var op GroupMembershipOp
-		json.NewDecoder(r.Body).Decode(&op)
+		_ = json.NewDecoder(r.Body).Decode(&op)
 		if op.Op != "add" {
 			t.Errorf("expected op %q, got %q", "add", op.Op)
 		}
@@ -326,7 +326,7 @@ func TestModifyUserGroupMembership_add(t *testing.T) {
 func TestModifyUserGroupMembership_remove(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var op GroupMembershipOp
-		json.NewDecoder(r.Body).Decode(&op)
+		_ = json.NewDecoder(r.Body).Decode(&op)
 		if op.Op != "remove" {
 			t.Errorf("expected op %q, got %q", "remove", op.Op)
 		}
@@ -348,7 +348,7 @@ func TestModifyUserGroupMembership_remove(t *testing.T) {
 func TestModifyUserGroupMembership_apiError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprint(w, `{"message":"invalid operation"}`)
+		_, _ = fmt.Fprint(w, `{"message":"invalid operation"}`)
 	}))
 	defer server.Close()
 
@@ -377,10 +377,10 @@ func TestListUserGroupMembers_pagination(t *testing.T) {
 					To: GroupMember{ID: fmt.Sprintf("user%d", i), Type: "user"},
 				}
 			}
-			json.NewEncoder(w).Encode(members)
+			_ = json.NewEncoder(w).Encode(members)
 		} else {
 			// Return fewer to stop pagination
-			json.NewEncoder(w).Encode([]GroupMemberResponse{
+			_ = json.NewEncoder(w).Encode([]GroupMemberResponse{
 				{To: GroupMember{ID: "extra", Type: "user"}},
 			})
 		}
