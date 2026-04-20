@@ -1,0 +1,24 @@
+// Copyright (c) Nfernal
+// SPDX-License-Identifier: MPL-2.0
+
+package provider
+
+import (
+	"os"
+	"testing"
+
+	"github.com/hashicorp/terraform-plugin-framework/providerserver"
+	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
+)
+
+var testAccProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
+	"jumpcloud": providerserver.NewProtocol6WithError(New("test")()),
+}
+
+func testAccPreCheck(t *testing.T) {
+	t.Helper()
+
+	if v := os.Getenv("JUMPCLOUD_API_KEY"); v == "" {
+		t.Fatal("JUMPCLOUD_API_KEY must be set for acceptance tests")
+	}
+}
