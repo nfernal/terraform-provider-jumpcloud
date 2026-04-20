@@ -66,7 +66,7 @@ jobs:
           go-version-file: .go-version
       - run: go test -v -coverprofile=coverage.txt -timeout=120s -parallel=10 ./...
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
