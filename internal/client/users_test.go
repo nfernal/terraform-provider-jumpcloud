@@ -33,7 +33,7 @@ func TestCreateUser(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusCreated)
-		json.NewEncoder(w).Encode(SystemUser{
+		_ = json.NewEncoder(w).Encode(SystemUser{
 			ID:       "user123",
 			Username: user.Username,
 			Email:    user.Email,
@@ -60,7 +60,7 @@ func TestCreateUser(t *testing.T) {
 func TestCreateUser_apiError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusConflict)
-		fmt.Fprint(w, `{"message":"user already exists"}`)
+		_, _ = fmt.Fprint(w, `{"message":"user already exists"}`)
 	}))
 	defer server.Close()
 
@@ -94,7 +94,7 @@ func TestCreateUser_withAllFields(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusCreated)
-		json.NewEncoder(w).Encode(user)
+		_ = json.NewEncoder(w).Encode(user)
 	}))
 	defer server.Close()
 
@@ -123,7 +123,7 @@ func TestGetUser(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(SystemUser{
+		_ = json.NewEncoder(w).Encode(SystemUser{
 			ID:       "user123",
 			Username: "testuser",
 			Email:    "test@example.com",
@@ -144,7 +144,7 @@ func TestGetUser(t *testing.T) {
 func TestGetUser_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"user not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"user not found"}`)
 	}))
 	defer server.Close()
 
@@ -169,11 +169,11 @@ func TestUpdateUser(t *testing.T) {
 		}
 
 		var user SystemUser
-		json.NewDecoder(r.Body).Decode(&user)
+		_ = json.NewDecoder(r.Body).Decode(&user)
 
 		w.WriteHeader(http.StatusOK)
 		user.ID = "user123"
-		json.NewEncoder(w).Encode(user)
+		_ = json.NewEncoder(w).Encode(user)
 	}))
 	defer server.Close()
 
@@ -194,7 +194,7 @@ func TestUpdateUser(t *testing.T) {
 func TestUpdateUser_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"user not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"user not found"}`)
 	}))
 	defer server.Close()
 
@@ -214,7 +214,7 @@ func TestDeleteUser(t *testing.T) {
 			t.Errorf("expected path /systemusers/user123, got %s", r.URL.Path)
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{}`)
+		_, _ = fmt.Fprint(w, `{}`)
 	}))
 	defer server.Close()
 
@@ -228,7 +228,7 @@ func TestDeleteUser(t *testing.T) {
 func TestDeleteUser_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"user not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"user not found"}`)
 	}))
 	defer server.Close()
 
@@ -247,7 +247,7 @@ func TestGetUserByEmail(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(map[string]interface{}{
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"results": []SystemUser{
 				{ID: "user123", Username: "testuser", Email: "test@example.com"},
 			},
@@ -269,7 +269,7 @@ func TestGetUserByEmail(t *testing.T) {
 func TestGetUserByEmail_noResults(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(map[string]interface{}{
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"results":    []SystemUser{},
 			"totalCount": 0,
 		})
@@ -289,7 +289,7 @@ func TestGetUserByEmail_noResults(t *testing.T) {
 func TestGetUserByEmail_noExactMatch(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(map[string]interface{}{
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"results": []SystemUser{
 				{ID: "user123", Username: "testuser", Email: "other@example.com"},
 			},
@@ -316,7 +316,7 @@ func TestGetUserByUsername(t *testing.T) {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(map[string]interface{}{
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"results": []SystemUser{
 				{ID: "user123", Username: "testuser", Email: "test@example.com"},
 			},
@@ -338,7 +338,7 @@ func TestGetUserByUsername(t *testing.T) {
 func TestGetUserByUsername_noResults(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(map[string]interface{}{
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"results":    []SystemUser{},
 			"totalCount": 0,
 		})
@@ -358,7 +358,7 @@ func TestGetUserByUsername_noResults(t *testing.T) {
 func TestGetUserByUsername_noExactMatch(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(map[string]interface{}{
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"results": []SystemUser{
 				{ID: "user123", Username: "testuser_other", Email: "test@example.com"},
 			},
@@ -381,7 +381,7 @@ func TestGetUser_withNilPointerFields(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		// Return user with no optional pointer fields
-		fmt.Fprint(w, `{"_id":"user123","username":"testuser","email":"test@example.com","activated":true}`)
+		_, _ = fmt.Fprint(w, `{"_id":"user123","username":"testuser","email":"test@example.com","activated":true}`)
 	}))
 	defer server.Close()
 
@@ -407,7 +407,7 @@ func TestGetUser_withNilPointerFields(t *testing.T) {
 func TestGetUser_withMFAFields(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{"_id":"user123","username":"testuser","email":"test@example.com","mfa":{"configured":true,"exclusion":false}}`)
+		_, _ = fmt.Fprint(w, `{"_id":"user123","username":"testuser","email":"test@example.com","mfa":{"configured":true,"exclusion":false}}`)
 	}))
 	defer server.Close()
 

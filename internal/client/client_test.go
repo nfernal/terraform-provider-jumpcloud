@@ -205,7 +205,7 @@ func TestDoRequestWithQuery_noParams(t *testing.T) {
 func TestDoListRequest_v2Format(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `[{"id":"1"},{"id":"2"}]`)
+		_, _ = fmt.Fprint(w, `[{"id":"1"},{"id":"2"}]`)
 	}))
 	defer server.Close()
 
@@ -222,7 +222,7 @@ func TestDoListRequest_v2Format(t *testing.T) {
 func TestDoListRequest_v1Format(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{"results":[{"id":"1"},{"id":"2"},{"id":"3"}],"totalCount":3}`)
+		_, _ = fmt.Fprint(w, `{"results":[{"id":"1"},{"id":"2"},{"id":"3"}],"totalCount":3}`)
 	}))
 	defer server.Close()
 
@@ -288,7 +288,7 @@ func TestDoListRequest_emptyResults(t *testing.T) {
 func TestDoListRequest_apiError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusForbidden)
-		fmt.Fprint(w, `{"message":"forbidden"}`)
+		_, _ = fmt.Fprint(w, `{"message":"forbidden"}`)
 	}))
 	defer server.Close()
 
@@ -302,7 +302,7 @@ func TestDoListRequest_apiError(t *testing.T) {
 func TestDoListRequest_invalidJSON(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `not json`)
+		_, _ = fmt.Fprint(w, `not json`)
 	}))
 	defer server.Close()
 

@@ -49,7 +49,7 @@ func TestCreateSystemGroup(t *testing.T) {
 func TestCreateSystemGroup_apiError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprint(w, `{"message":"invalid system group"}`)
+		_, _ = fmt.Fprint(w, `{"message":"invalid system group"}`)
 	}))
 	defer server.Close()
 
@@ -94,7 +94,7 @@ func TestGetSystemGroup(t *testing.T) {
 func TestGetSystemGroup_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"system group not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"system group not found"}`)
 	}))
 	defer server.Close()
 
@@ -139,7 +139,7 @@ func TestUpdateSystemGroup(t *testing.T) {
 func TestUpdateSystemGroup_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"system group not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"system group not found"}`)
 	}))
 	defer server.Close()
 
@@ -172,7 +172,7 @@ func TestDeleteSystemGroup(t *testing.T) {
 func TestDeleteSystemGroup_notFound(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, `{"message":"system group not found"}`)
+		_, _ = fmt.Fprint(w, `{"message":"system group not found"}`)
 	}))
 	defer server.Close()
 
