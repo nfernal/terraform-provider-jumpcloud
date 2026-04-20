@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version-file: .go-version
       - run: go mod download
@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version-file: .go-version
       - uses: golangci/golangci-lint-action@v9
@@ -41,7 +41,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version-file: .go-version
       - uses: hashicorp/setup-terraform@v3
@@ -60,7 +60,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version-file: .go-version
       - run: go test -v -coverprofile=coverage.txt -timeout=120s -parallel=10 ./...
