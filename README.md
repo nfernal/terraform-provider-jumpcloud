@@ -1,5 +1,17 @@
 # Terraform Provider for JumpCloud
 
+[![CI](https://github.com/nfernal/terraform-provider-jumpcloud/actions/workflows/ci.yml/badge.svg)](https://github.com/nfernal/terraform-provider-jumpcloud/actions/workflows/ci.yml)
+[![Release](https://github.com/nfernal/terraform-provider-jumpcloud/actions/workflows/release.yml/badge.svg)](https://github.com/nfernal/terraform-provider-jumpcloud/actions/workflows/release.yml)
+[![Semantic Release](https://github.com/nfernal/terraform-provider-jumpcloud/actions/workflows/semantic-release.yml/badge.svg)](https://github.com/nfernal/terraform-provider-jumpcloud/actions/workflows/semantic-release.yml)
+[![codecov](https://codecov.io/gh/nfernal/terraform-provider-jumpcloud/branch/main/graph/badge.svg)](https://codecov.io/gh/nfernal/terraform-provider-jumpcloud)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/nfernal/terraform-provider-jumpcloud)](https://github.com/nfernal/terraform-provider-jumpcloud/blob/main/go.mod)
+[![GitHub Release](https://img.shields.io/github/v/release/nfernal/terraform-provider-jumpcloud)](https://github.com/nfernal/terraform-provider-jumpcloud/releases/latest)
+[![GitHub Release Date](https://img.shields.io/github/release-date/nfernal/terraform-provider-jumpcloud)](https://github.com/nfernal/terraform-provider-jumpcloud/releases/latest)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/nfernal/terraform-provider-jumpcloud)](https://github.com/nfernal/terraform-provider-jumpcloud/commits/main)
+[![GitHub Languages](https://img.shields.io/github/languages/count/nfernal/terraform-provider-jumpcloud)](https://github.com/nfernal/terraform-provider-jumpcloud)
+[![License](https://img.shields.io/github/license/nfernal/terraform-provider-jumpcloud)](https://github.com/nfernal/terraform-provider-jumpcloud/blob/main/LICENSE)
+[![Terraform Registry](https://img.shields.io/badge/terraform-registry-blueviolet?logo=terraform)](https://registry.terraform.io/providers/nfernal/jumpcloud/latest)
+
 The JumpCloud Terraform Provider allows you to manage [JumpCloud](https://jumpcloud.com/) resources using [Terraform](https://www.terraform.io/) or [OpenTofu](https://opentofu.org/).
 
 ## Requirements
