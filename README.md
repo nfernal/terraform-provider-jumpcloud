@@ -103,4 +103,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full development guidelines.
 
 ## License
 
-This project is licensed under the [Mozilla Public License v2.0](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
