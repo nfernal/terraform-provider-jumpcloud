@@ -44,6 +44,9 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: .go-version
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
       - run: go generate ./...
       - run: cd tools && go generate ./...
       - name: Verify no generated changes
